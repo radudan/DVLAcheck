@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FilesOperations {
     private static Logger log = LogConfig.getLoger(FilesOperations.class);
@@ -40,4 +42,15 @@ public class FilesOperations {
         return results;
     }
 
+    public List<HashMap<String, String>> extractRegistration(String stringData, Pattern p) {
+        Matcher m = p.matcher(stringData);
+        List<HashMap<String, String>> results = new ArrayList<>();
+        while (m.find()) {
+            String theGroup = m.group().replace(" ","");
+            HashMap<String, String> carDetails = new HashMap<String, String>();
+            carDetails.put("REGISTRATION", theGroup);
+            results.add(carDetails);
+        }
+        return  results;
+    }
 }

@@ -16,6 +16,7 @@ import cucumber.api.java.en.When;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Guice
 public class CarsTestsImplementation {
@@ -39,7 +40,8 @@ public class CarsTestsImplementation {
 
 	@Given("^I read registration details from ([^\"]*) and verify match against ([^\"]*)$")
 	public void readAllFilesFromPath(String regNumbers, String expectedDetails) {
-		carRegNumber = fo.getCarDetails(fo.readFile(regNumbers));
+		Pattern regex = Pattern.compile("(\\b[A-Z][A-Z]\\d\\d [A-Z][A-Z][A-Z]|\\b[A-Z][A-Z]\\d\\d[A-Z][A-Z][A-Z]\\b)");
+		carRegNumber = fo.extractRegistration(fo.readFile(regNumbers).toString(), regex);
 		expectedCarDetails = fo.getCarDetails(fo.readFile(expectedDetails));
 		Assert.assertTrue(expectedCarDetails.size() > 0, "No car details have been found!");
 		Assert.assertTrue(expectedCarDetails.size() == carRegNumber.size(), "Actual and expected files do NOT match");

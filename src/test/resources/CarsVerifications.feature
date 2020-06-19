@@ -7,5 +7,5 @@ Feature: Compare cars details from files against website
       Then The details should match
 
       Examples:
-        | actualCarDetails                            | expectedCardetails                           |
+        | actualCarDetails                            | expectedCardetails                              |
         | src/main/resources/carsDataFiles/car_in.txt | src/main/resources/carsDataFiles/car_output.txt |
